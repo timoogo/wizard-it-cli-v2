@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",                                // La version cible de ECMAScript
+    "module": "ESNext",                                // Spécifie le format de module (CommonJS, UMD, ES6, etc.)
+    "moduleResolution": "node",                        // Comment résoudre les modules
+    "esModuleInterop": true,                           // Active l'interopérabilité des modules ES6
+    "outDir": "./dist",                                // Où placer les fichiers compilés
+    "rootDir": "./src",                                // D'où prendre les fichiers source
+    "strict": true,                                    // Active un ensemble d'options strictes de vérification de type
+    "forceConsistentCasingInFileNames": true,          // Empêche les utilisateurs d'utiliser des noms de fichiers inconséquents
+    "skipLibCheck": true,                              // Ignore les erreurs de vérification de type dans les fichiers de déclaration
+    "resolveJsonModule": true,                         // Permet d'importer des modules JSON
+    "isolatedModules": true,                           // Assure que chaque fichier est un module
+    "downlevelIteration": true                         // Fournit un support complet pour l'itération sur les collections, comme Array ou Map
+  },
+  "include": ["src/**/*.ts"],                          // Les fichiers à compiler
+  "exclude": ["node_modules"]                          // Les fichiers à exclure de la compilation
+}
