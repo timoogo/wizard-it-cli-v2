@@ -7,42 +7,47 @@ export enum Language {
     EN = 'en',
     FR = 'fr'
 }
-// system lang 
-function getSystemLanguage(): Readonly<{ fullLanguage: string, langCode: string }> {
+
+// Define a type for the system language info
+interface SystemLanguageInfo {
+    fullLanguage: string;
+    langCode: string;
+}
+
+// Define a function to get system language information
+const getSystemLanguage = (): SystemLanguageInfo => {
     const fullLanguage = process.env.LANG || 'en_US';
     const langCode = fullLanguage.split('.')[0].split('_')[0];
     
     return Object.freeze({ fullLanguage, langCode });
 }
 
-
-
 // Use readonly to ensure that the object isn't modified accidentally
-const LANGUAGE_RESOURCES: { readonly [key in Language]: { readonly QUESTIONS: Questions, readonly ERROR_MESSAGES: ErrorMessages } } = {
+const LANGUAGE_RESOURCES: Record<Language, Record<ResourceTypes, Record<string, string>>> = {
     [Language.EN]: en,
     [Language.FR]: fr
 };
 
 const languageInfo = getSystemLanguage();
 
-// Utilisez la langue détectée par le système comme langue par défaut, sinon utilisez 'en' comme langue par défaut.
+// Utilize the language detected by the system as the default language, otherwise use 'en' as the default language.
 let currentLang: Language = (languageInfo.langCode === 'fr') ? Language.FR : Language.EN;
 
-export function getCurrentLang(): Language {
+export const getCurrentLang = (): Language => {
     return currentLang;
 }
 
-export function setCurrentLang(lang: Language): void {
-    currentLang = lang;
+export const setCurrentLang = (targetedLang: Language): void => {
+    currentLang = targetedLang;
 }
 
-export function switchLanguage(): void {
+export const switchLanguage = (): void => {
     currentLang = (currentLang === Language.FR) ? Language.EN : Language.FR;
 }
 
-export function getTranslation<T extends ResourceTypes>(key: string, type: T): string {
-    const translations = LANGUAGE_RESOURCES[currentLang][type];
-    return translations[key] || `Translation not found for key: ${key}`;
+// Define a generic getTranslation function to fetch translations based on the resource type
+export const getTranslation = <T extends ResourceTypes>(key: string, type: T): string => {
+    return LANGUAGE_RESOURCES[currentLang][type][key];
 }
 
 export function getQuestionTranslation(key: string): string {
@@ -56,3 +61,15 @@ export function getErrorMessageTranslation(key: string): string {
 export function getQuestions(): Questions {
     return LANGUAGE_RESOURCES[currentLang].QUESTIONS;
 }
+
+export function replaceSpacesWithUnderscores(input: string): string {    
+    return input.replace(/ /g, '_');
+}
+
+export function replaceCamelCaseWithUnderscores(input: string): string {
+    return input.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+}
+// transform abra_cadabra to AbraCadabra
+export function toCamelCase(input: string): string {
+    return input.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+} 

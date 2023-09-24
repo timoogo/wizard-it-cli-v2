@@ -12,6 +12,20 @@ export const QUESTIONS: Questions = {
   COLUMN_NAME: "Quel est le nom de la colonne?",
   COLUMN_TYPE: "Quel est le type de la colonne?",
   SELECT_LANGUAGE: "Quelle langue souhaitez-vous utiliser?",
+  // ------------------------------------
+  ENTITY_NAME: "Quel est le nom de l'entité?",
+  COLUMN_LENGTH: "Quelle est la longueur de la colonne?",
+  IS_PRIMARY: "Est-ce une clé primaire?",
+  IS_GENERATED: "Est-ce une colonne générée?",
+  IS_UNIQUE: "Est-ce une colonne unique?",
+  IS_NULLABLE: "Est-ce une colonne nullable?",
+  SAVE_TO_JSON: "Voulez-vous enregistrer l'entité dans un fichier JSON?",
+  DEFAULT_VALUE: "Quelle est la valeur par défaut?",
+  MORE_COLUMNS: "Voulez-vous ajouter une autre colonne?",
+  SAVE_JSON: "Voulez-vous enregistrer l'entité dans un fichier JSON?",
+
+
+
 
   // ... autres questions
 };

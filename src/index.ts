@@ -1,68 +1,96 @@
-#!/usr/bin/env ts-node
-
+import fs from "fs";
+import path from "path";
 import { Command } from "commander";
+import { askQuestion, displayAllAnswers } from "./utils/questions.utils.js";
 import {
-  askDriver,
-  askHost,
-  askUser,
-  askPassword,
-  askPort,
-  askDatabase
-} from "./questions/connection.js";
-import { isConnectionValid } from "./utils/database.utils.js";
-import { askLanguage } from "./questions/language.js";
-import { getQuestions, setCurrentLang } from "./utils/language.utils.js";
-import { createPool } from "./db/drivers/mysql.js";
+  askForEntityName,
+  askForTableName,
+  askColumnName,
+  askColumnType,
+  askColumnLength,
+  askIsPrimary,
+  askIsGenerated,
+  askDefaultValue,
+  askIsUnique,
+  askIsNullable,
+  askSaveToJson,
+  writeEntityToJsonFile,
+} from "./questions/entity.js";
 
 const program = new Command();
-
 program.version("0.0.1");
 
 program
-  .command("gen:db")
-  .description("Create a new database")
-  .action(async () => {
-    const language = await askLanguage();
-    setCurrentLang(language);
+  .command("wizard:new")
+  .description("Créez une nouvelle entité")
+  .option("-v","--view-answers", "Voir l'ensemble des réponses depuis le début")
+  .action(async (cmd) => {
+    if (cmd.viewAnswers){
+      displayAllAnswers();
+    }
+    const entityName = await askForEntityName();
 
-    const driver = await askDriver();
-    const host = await askHost();
-    const user = await askUser();
-    const password = await askPassword();
-    const port = await askPort();
-    const database = await askDatabase({
-      driver,
-      host,
-      user,
-      password,
-      port
-    });
+    // Utilisation de la bibliothèque pluralize pour générer le nom de table pluriel
 
+    const tableName = await askForTableName(entityName);
 
-    
-    const QUESTIONS = getQuestions();
+    const columns = [];
+    let moreColumns = true;
 
-    const connectionParams = {
-      driver,
-      host,
-      user,
-      password,
-      port,
-      database: database,      // Vous pouvez également demander le nom de la base de données à l'utilisateur si nécessaire
-      connectionLimit: 10,   // Vous pouvez mettre en dur ou demander à l'utilisateur
-      keepAlive: true        // De même ici
+    let saveToJsonAsked = false; // Ajout d'une variable pour suivre si la question "saveToJson" a déjà été posée
+
+    while (moreColumns) {
+      const columnName = await askColumnName();
+      const columnType = await askColumnType();
+      const columnLength =
+        columnType === "varchar" ? await askColumnLength() : undefined;
+      const isPrimary = await askIsPrimary();
+      const isGenerated = isPrimary ? await askIsGenerated() : false;
+      const defaultValue = await askDefaultValue();
+      const isUnique = await askIsUnique();
+      const isNullable = await askIsNullable();
+
+      columns.push({
+        name: columnName,
+        type: columnType,
+        length: columnLength,
+        isPrimary,
+        isGenerated,
+        default: defaultValue,
+        isUnique,
+        nullable: isNullable,
+      });
+
+      // Vérifier si la question "saveToJson" n'a pas encore été posée
+      if (!saveToJsonAsked) {
+        const response = await askSaveToJson();
+        moreColumns = response === "yes";
+
+        // Mettre à jour la variable saveToJsonAsked pour indiquer que la question a été posée
+        saveToJsonAsked = true;
+      } else {
+        moreColumns = false; // Sortir de la boucle si la question a déjà été posée
+      }
+    }
+
+    const entity = {
+      name: entityName,
+      tableName: tableName, // Remplacez les espaces par des underscores
+      columns,
+      version: 1,
     };
 
+    // La question "saveToJson" est posée une seule fois après la boucle
+    if (saveToJsonAsked) {
+      const folderPath = "wizard-gen";
+      if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath);
+      }
 
+      const jsonFilePath = path.join(folderPath, "entityConfig.json");
+      writeEntityToJsonFile(jsonFilePath, entity);
 
-    const isValid = await isConnectionValid(connectionParams, false);
-    if (isValid) {
-      console.log(QUESTIONS.CONNECTION_SUCCESS);
-
-      // ...
-    } else {
-      console.error(QUESTIONS.CONNECTION_FAILED);
-      // ...
+      console.log(`L'entité a été enregistrée dans le fichier ${jsonFilePath}`);
     }
   });
 

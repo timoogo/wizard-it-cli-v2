@@ -10,5 +10,15 @@ export const askQuestion = async <T extends Question>(questionKey: string, confi
         message: questionText
     };
     const answer = await inquirer.prompt([question]);
+    allAnswers.push(answer[config.name!]); // Ajout de la réponse à allAnswers
     return answer[config.name!];
 };
+
+export const allAnswers: string[] = [];
+
+export const displayAllAnswers = () => {
+    console.log("Réponses depuis le début :");
+    allAnswers.forEach((answer, index) => {
+      console.log(`Étape ${index + 1}: ${answer}`);
+    });
+  };
