@@ -23,12 +23,14 @@ export const QUESTIONS: Questions = {
   DEFAULT_VALUE: "Quelle est la valeur par défaut?",
   MORE_COLUMNS: "Voulez-vous ajouter une autre colonne?",
   SAVE_JSON: "Voulez-vous enregistrer l'entité dans un fichier JSON?",
+  ACCEPT_DEFAULT: "Voulez-vous accepter la valeur par défaut?",
 
 
 
 
   // ... autres questions
-};
+} as const;
+export type QuestionKeys = keyof typeof QUESTIONS;
 export const ERROR_MESSAGES = {
   INVALID_DRIVER: "Le driver spécifié n'est pas pris en charge.",
   INVALID_LANGUAGE: "La langue spécifiée n'est pas prise en charge.",

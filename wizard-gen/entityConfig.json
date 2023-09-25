@@ -1,24 +1,15 @@
 {
-  "name": "thaumaturgeTrove",
-  "tableName": "thaumaturge_troves",
+  "name": "JinnJournal",
+  "tableName": "jinn_journals",
   "columns": [
     {
-      "name": "id",
-      "type": "number",
-      "isPrimary": true,
-      "isGenerated": true,
-      "default": "",
-      "isUnique": true,
-      "nullable": false
-    },
-    {
-      "name": "name",
+      "name": "nom",
       "type": "varchar",
       "length": null,
       "isPrimary": false,
       "isGenerated": false,
       "default": "",
-      "isUnique": true,
+      "isUnique": false,
       "nullable": false
     }
   ],

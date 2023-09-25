@@ -4,8 +4,8 @@ import * as fr from '../resources/fr.js';
 import { Questions, ErrorMessages, ResourceTypes } from './types.utils.js';
 
 export enum Language {
-    EN = 'en',
-    FR = 'fr'
+    EN = 'English (US)',
+    FR = 'Français (FR)'
 }
 
 // Define a type for the system language info
@@ -13,7 +13,10 @@ interface SystemLanguageInfo {
     fullLanguage: string;
     langCode: string;
 }
-
+export enum Separator {
+    UNDERSCORE = '_',
+    DASH = '-'
+}
 // Define a function to get system language information
 const getSystemLanguage = (): SystemLanguageInfo => {
     const fullLanguage = process.env.LANG || 'en_US';
@@ -73,3 +76,11 @@ export function replaceCamelCaseWithUnderscores(input: string): string {
 export function toCamelCase(input: string): string {
     return input.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
 } 
+export function toCapitalCase(input: string, separator?: Separator): string {
+    if (separator) { // camel_case
+     // return CamelCase
+        return input.split(separator).map(word => word[0].toUpperCase() + word.slice(1)).join('');
+    } else { // camelCase
+        return input[0].toUpperCase() + input.slice(1);
+    }
+}

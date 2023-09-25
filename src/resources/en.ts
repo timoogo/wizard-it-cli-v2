@@ -3,6 +3,7 @@ import { Questions } from "./Question.type.js";
 export const QUESTIONS: Questions = {
     DATABASE_NAME: "What is the name of the database?",
     SELECT_DRIVER: "Which driver would you like to use (MySql, Postgres, MariaDB)?",
+
     HOST_NAME: "What is the host name?",
     USER_NAME: "What is the user name?",
     PORT: "What is the port?",
@@ -23,10 +24,12 @@ export const QUESTIONS: Questions = {
     DEFAULT_VALUE: "What is the default value?",
     MORE_COLUMNS: "Do you want to add another column?",
     SAVE_JSON: "Do you want to save the entity to a JSON file?",  
+    ACCEPT_DEFAULT: "Do you want to accept the default value?",
 
     
     // ... autres questions
-  };
+  } as const;
+  export type QuestionKeys = keyof typeof QUESTIONS;
 
   export const ERROR_MESSAGES = {
     INVALID_DRIVER: "The specified driver is not supported.",
