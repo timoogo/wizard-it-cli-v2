@@ -13,6 +13,7 @@ import {
   askDefaultValue,
   askIsUnique,
   askIsNullable,
+  askIfMoreColumns,
   askSaveToJson,
   writeEntityToJsonFile,
 } from "./questions/entity.js";
@@ -38,40 +39,35 @@ program
     let moreColumns = true;
 
     let saveToJsonAsked = false; // Ajout d'une variable pour suivre si la question "saveToJson" a déjà été posée
+    
+    
+while (moreColumns) {
+    const columnName = await askColumnName();
+    const columnType = await askColumnType();
+    const columnLength =
+      columnType === "varchar" ? await askColumnLength() : undefined;
+    const isPrimary = await askIsPrimary();
+    const isGenerated = isPrimary ? await askIsGenerated() : false;
+    const defaultValue = await askDefaultValue();
+    const isUnique = await askIsUnique();
+    const isNullable = await askIsNullable();
 
-    while (moreColumns) {
-      const columnName = await askColumnName();
-      const columnType = await askColumnType();
-      const columnLength =
-        columnType === "varchar" ? await askColumnLength() : undefined;
-      const isPrimary = await askIsPrimary();
-      const isGenerated = isPrimary ? await askIsGenerated() : false;
-      const defaultValue = await askDefaultValue();
-      const isUnique = await askIsUnique();
-      const isNullable = await askIsNullable();
+    columns.push({
+      name: columnName,
+      type: columnType,
+      length: columnLength,
+      isPrimary,
+      isGenerated,
+      default: defaultValue,
+      isUnique,
+      nullable: isNullable,
+    });
 
-      columns.push({
-        name: columnName,
-        type: columnType,
-        length: columnLength,
-        isPrimary,
-        isGenerated,
-        default: defaultValue,
-        isUnique,
-        nullable: isNullable,
-      });
+    moreColumns = (await askIfMoreColumns()) === 'yes';
 
-      // Vérifier si la question "saveToJson" n'a pas encore été posée
-      if (!saveToJsonAsked) {
-        const response = await askSaveToJson();
-        moreColumns = response === "yes";
+}
 
-        // Mettre à jour la variable saveToJsonAsked pour indiquer que la question a été posée
-        saveToJsonAsked = true;
-      } else {
-        moreColumns = false; // Sortir de la boucle si la question a déjà été posée
-      }
-    }
+    const response = await askSaveToJson();
 
     const entity = {
       name: entityName,
@@ -80,8 +76,11 @@ program
       version: 1,
     };
 
+  
     // La question "saveToJson" est posée une seule fois après la boucle
-    if (saveToJsonAsked) {
+    if (response) {
+      console.log("saveToJson a déjà été posée");
+      
       const folderPath = "wizard-gen";
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath);

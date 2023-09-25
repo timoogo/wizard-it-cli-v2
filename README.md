@@ -24,3 +24,7 @@ Il va donc générer les modèles de données et les interfaces d'administration
   - updated_at: date
   - deleted_at: date
   - created_by: relation
+
+
+const tableaudeliens = [{"lien1", "","",""}]
+si tableau > 4, on coupe

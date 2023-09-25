@@ -111,6 +111,11 @@ export const askSaveToJson = async (): Promise<string> => {
 }
 
 export function writeEntityToJsonFile(filePath: string, entity: any) {
+    //log the entity  jsonified to the console);
+    console.log(JSON.stringify(entity, null, 2));
+
+    
+    
     const jsonData = JSON.stringify(entity, null, 2);
     fs.writeFileSync(filePath, jsonData, "utf-8");
   }

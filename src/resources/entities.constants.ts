@@ -1,5 +1,5 @@
 export const ENTITIES_NAME_SAMPLES  =[
-    "arcanum_db",
+    "arcanum",
     "wizardry_ware",
     "pyromancer_plex",
     "eldritch_engine",

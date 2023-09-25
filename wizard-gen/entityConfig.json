@@ -1,0 +1,26 @@
+{
+  "name": "thaumaturgeTrove",
+  "tableName": "thaumaturge_troves",
+  "columns": [
+    {
+      "name": "id",
+      "type": "number",
+      "isPrimary": true,
+      "isGenerated": true,
+      "default": "",
+      "isUnique": true,
+      "nullable": false
+    },
+    {
+      "name": "name",
+      "type": "varchar",
+      "length": null,
+      "isPrimary": false,
+      "isGenerated": false,
+      "default": "",
+      "isUnique": true,
+      "nullable": false
+    }
+  ],
+  "version": 1
+}
