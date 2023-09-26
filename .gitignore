@@ -1,2 +1,6 @@
 dist/
 node_modules/*
+wizard-gen/*
+!wizard-gen/entityConfig.json
+
+*.zip

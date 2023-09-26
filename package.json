@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "gen:db": "tsc && node ./dist/index.js gen:db",
     "wizard:new": "tsc && node ./dist/index.js wizard:new",
+    "wizard:change": "tsc && node ./dist/index.js wizard:change",
     "build": "tsc",
     "watch": "tsc -w"
   },

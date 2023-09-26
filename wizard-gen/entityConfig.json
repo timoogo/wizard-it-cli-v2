@@ -1,9 +1,19 @@
 {
-  "name": "JinnJournal",
-  "tableName": "jinn_journals",
+  "name": "BewitchmentBase",
+  "tableName": "bewitchment_bases",
   "columns": [
     {
-      "name": "nom",
+      "name": "id",
+      "type": "number",
+      "length": "",
+      "isPrimary": true,
+      "isGenerated": true,
+      "default": null,
+      "isUnique": true,
+      "nullable": false
+    },
+    {
+      "name": "name",
       "type": "varchar",
       "length": null,
       "isPrimary": false,
@@ -13,5 +23,5 @@
       "nullable": false
     }
   ],
-  "version": 1
+  "version": 3
 }

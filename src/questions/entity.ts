@@ -169,3 +169,10 @@ export async function askIfAcceptDefaults(): Promise<boolean> {
         default: false
     });
 }
+export async function askColumnToModify(columns: ColumnDetails[]): Promise<string> {
+    return askQuestion("COLUMN_TO_MODIFY", {
+        type: 'list',
+        name: 'columnToModify',
+        choices: columns.map(col => col.name)
+    });
+}
