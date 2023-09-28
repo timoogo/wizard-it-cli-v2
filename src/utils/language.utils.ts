@@ -47,10 +47,11 @@ export const getCurrentLang = (): Language => {
 export const setCurrentLang = (targetedLang: Language): void => {
   currentLang = targetedLang;
 };
-
-export const switchLanguage = (): void => {
-  currentLang = currentLang === Language.FR ? Language.EN : Language.FR;
+export const setLangToSystem = (): void => {
+  currentLang = languageInfo.langCode === "fr" ? Language.FR : Language.EN;
 };
+
+
 
 // Define a generic getTranslation function to fetch translations based on the resource type
 export const getTranslation = <T extends ResourceTypes>(

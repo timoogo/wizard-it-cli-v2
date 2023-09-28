@@ -3,9 +3,13 @@
   import { modifyEntitySchema } from "./cli/change.schema.cli.js";
   import { Menu } from "./cli/menu.cli.js";
 import { askLanguage } from "./questions/language.js";
+import { Language, setCurrentLang, setLangToSystem } from "./utils/language.utils.js";
 
+  
   const program = new Command();
   program.version("0.0.1");
+
+  
 
   program
     .command("wizard")
@@ -35,3 +39,4 @@ import { askLanguage } from "./questions/language.js";
     .description("Configurer l'assistant")
     .action(() => Menu((cmd: any) => cmd));
   program.parse(process.argv);
+    

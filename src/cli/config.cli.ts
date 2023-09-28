@@ -8,8 +8,8 @@ import { Language, setCurrentLang, getQuestions } from "../utils/language.utils.
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const WIZARDBOOK_PATH = path.join(__dirname, '..', '.wizardbook.js');
 
+const WIZARDBOOK_PATH = path.join(__dirname, '../.wizardbook.json');
 const packageJsonPath = path.join(__dirname, '../package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
 

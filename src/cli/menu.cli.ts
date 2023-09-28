@@ -2,7 +2,7 @@ import { askQuestion } from "../utils/questions.utils.js";
 import { modifyEntitySchema } from "./change.schema.cli.js";
 import { createNewEntity } from "./generate.schema.cli.js";
 import { askLanguage } from "../questions/language.js";
-import { setCurrentLang } from "../utils/language.utils.js";
+import { setCurrentLang, setLangToSystem } from "../utils/language.utils.js";
 import path from 'path';
 import url from 'url';
 import fs from 'fs';
@@ -50,6 +50,8 @@ export async function Menu(command: any) {
         case "wizard:language":
             askLanguage();
             break; 
+        case "wizard:fresh":
+            setLangToSystem();
         default:
             break;
     }

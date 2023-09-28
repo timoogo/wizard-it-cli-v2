@@ -13,6 +13,7 @@ export const QUESTIONS: Questions = {
     COLUMN_NAME: "What is the name of the column?",
     COLUMN_TYPE: "What is the type of the column?",
     SELECT_LANGUAGE: "Which language would you like to use?",
+    LANGUAGE_SELECTED: "The language has already been selected.",
     // ------------------------------------
     ENTITY_NAME: "What is the name of the entity?",
     COLUMN_LENGTH: "What is the length of the column?",

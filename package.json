@@ -11,7 +11,8 @@
     "wizard:new": "tsc && node ./dist/index.js wizard:new",
     "wizard:change": "tsc && node ./dist/index.js wizard:change",
     "wizard:language": "npm run build && node ./dist/index.js wizard:language",
-    "build": "tsc && cp package.json dist/ && cp .wizardbook.js dist/",
+    "wizard:fresh": "npm run build && node ./dist/index.js wizard:fresh",
+    "build": "tsc && cp package.json dist/ && cp .wizardbook.json dist/",
     "watch": "tsc -w"
   },
   "dependencies": {
