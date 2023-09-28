@@ -6,10 +6,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "wizard": "npm run build && node ./dist/index.js wizard",
     "gen:db": "tsc && node ./dist/index.js gen:db",
     "wizard:new": "tsc && node ./dist/index.js wizard:new",
     "wizard:change": "tsc && node ./dist/index.js wizard:change",
-    "build": "tsc",
+    "wizard:language": "npm run build && node ./dist/index.js wizard:language",
+    "build": "tsc && cp package.json dist/ && cp .wizardbook.js dist/",
     "watch": "tsc -w"
   },
   "dependencies": {
